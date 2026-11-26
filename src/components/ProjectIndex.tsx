@@ -33,7 +33,7 @@ export function ProjectIndex({ onSelectProject }: ProjectIndexProps) {
             </div>
             <h2
               id="systems-heading"
-              className="text-balance text-[clamp(34px,3.6vw,54px)] leading-[1.08] font-medium tracking-[-0.045em] text-ink"
+              className="display-heading text-balance text-[clamp(34px,3.6vw,54px)] leading-[1.08] font-medium tracking-[-0.028em] text-ink"
             >
               {STUDIO_META.systemsHeading}
             </h2>
@@ -78,11 +78,17 @@ export function ProjectIndex({ onSelectProject }: ProjectIndexProps) {
                   variant="card"
                 />
 
+                {/* Soft directional scrim keeping poster headline razor-sharp over living geometry */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-plinth/92 via-plinth/62 to-transparent"
+                />
+
                 {/* Top-left architectural L-tick */}
                 <span
                   aria-hidden="true"
                   style={{ borderColor: project.accentHex }}
-                  className="pointer-events-none absolute top-4 left-4 h-3 w-3 border-t-[1.5px] border-l-[1.5px] opacity-65 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100"
+                  className="pointer-events-none absolute top-4 left-4 z-10 h-3 w-3 border-t-[1.5px] border-l-[1.5px] opacity-65 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100"
                 />
 
                 <div className="relative z-10 flex items-center justify-between gap-3 pt-1">
@@ -98,7 +104,7 @@ export function ProjectIndex({ onSelectProject }: ProjectIndexProps) {
                 </div>
 
                 <div className="relative z-10 mt-6">
-                  <span className="block text-balance text-[clamp(24px,2.1vw,31px)] leading-[1.08] font-medium tracking-[-0.04em] text-ink transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5">
+                  <span className="display-heading block text-balance text-[clamp(24px,2.1vw,30px)] leading-[1.1] font-medium tracking-[-0.025em] text-ink transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5">
                     {project.plateHeadline}
                   </span>
                   <span className="mt-2.5 block font-mono text-[11px] tracking-[0.04em] text-ink-muted">
@@ -110,7 +116,7 @@ export function ProjectIndex({ onSelectProject }: ProjectIndexProps) {
               {/* Lower Editorial Details Block */}
               <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
                 <div>
-                  <h3 className="text-[clamp(26px,2.2vw,34px)] leading-[1.12] font-medium tracking-[-0.04em] text-ink">
+                  <h3 className="display-heading text-[clamp(26px,2.2vw,33px)] leading-[1.12] font-medium tracking-[-0.024em] text-ink">
                     {project.name}
                   </h3>
                   <p className="mt-3 text-[15px] leading-[1.6] text-ink-secondary">

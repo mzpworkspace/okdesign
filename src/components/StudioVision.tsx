@@ -44,7 +44,7 @@ export function StudioVision({ onSelectProject }: StudioVisionProps) {
               </div>
               <h2
                 id="vision-heading"
-                className="max-w-[500px] text-balance text-[clamp(34px,3.6vw,54px)] leading-[1.08] font-medium tracking-[-0.045em] text-ink"
+                className="display-heading max-w-[500px] text-balance text-[clamp(34px,3.6vw,54px)] leading-[1.09] font-medium tracking-[-0.028em] text-ink"
               >
                 {STUDIO_META.visionHeading}
               </h2>
@@ -77,7 +77,7 @@ export function StudioVision({ onSelectProject }: StudioVisionProps) {
           <a
             href="#top"
             aria-label="Ideolect back to top"
-            className="inline-flex shrink-0 items-center gap-2.5 text-[19px] font-semibold tracking-[-0.04em] text-ink"
+            className="inline-flex min-h-[44px] shrink-0 items-center gap-2.5 text-[19px] font-semibold tracking-[-0.03em] text-ink transition-opacity duration-200 hover:opacity-80"
           >
             <BrandMark className="h-[22px] w-[20px] text-bronze" />
             <span>{STUDIO_META.brand}</span>

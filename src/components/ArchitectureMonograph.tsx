@@ -122,9 +122,9 @@ function SevenLayerDiagram() {
         fill="#5C615E"
         fontSize="10"
         fontFamily="JetBrains Mono, monospace"
-        letterSpacing="0.08em"
+        letterSpacing="0.06em"
       >
-        7 LAYERS · BIDIRECTIONAL CROSS-COMPUTATION
+        7 layers · Bidirectional cross-computation
       </text>
     </svg>
   );
@@ -265,9 +265,9 @@ function SecurityExchangeDiagram() {
         fill="#1F6B57"
         fontSize="9.5"
         fontFamily="JetBrains Mono, monospace"
-        letterSpacing="0.06em"
+        letterSpacing="0.05em"
       >
-        LIVE TRACE &amp; STATE
+        Live trace &amp; state
       </text>
       <text
         x="180"
@@ -276,9 +276,9 @@ function SecurityExchangeDiagram() {
         fill="#A85524"
         fontSize="9.5"
         fontFamily="JetBrains Mono, monospace"
-        letterSpacing="0.06em"
+        letterSpacing="0.05em"
       >
-        TARGETED HYPOTHESIS
+        Targeted hypothesis
       </text>
       <text
         x="180"
@@ -287,9 +287,9 @@ function SecurityExchangeDiagram() {
         fill="#5C615E"
         fontSize="10"
         fontFamily="JetBrains Mono, monospace"
-        letterSpacing="0.08em"
+        letterSpacing="0.06em"
       >
-        OBSERVATION · REACHABLE SINK · IMPACT
+        Observation · Reachable sink · Impact
       </text>
     </svg>
   );
@@ -315,22 +315,31 @@ export function ArchitectureMonograph() {
               <span>Architectural discipline</span>
             </div>
 
-            {/* Quiet Editorial Mode Switcher (no pill boxes — pure architectural underline tabs) */}
+            {/* Quiet Single-Row Editorial Mode Switcher (WAI-ARIA keyboard-accessible underline tabs) */}
             <div
               role="tablist"
               aria-label="Architectural topology perspective"
-              className="mb-8 flex flex-wrap items-center gap-6 border-b border-line"
+              onKeyDown={(event) => {
+                if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+                  event.preventDefault();
+                  const next = activeMode.id === 'seven-layer' ? 'exchange' : 'seven-layer';
+                  setActiveModeId(next);
+                }
+              }}
+              className="no-scrollbar mb-8 flex flex-nowrap items-center gap-5 overflow-x-auto border-b border-line sm:gap-7"
             >
               {ARCHITECTURE_MODES.map((mode) => {
                 const isSelected = mode.id === activeMode.id;
                 return (
                   <button
                     key={mode.id}
+                    id={`arch-tab-${mode.id}`}
                     type="button"
                     role="tab"
                     aria-selected={isSelected}
+                    aria-controls="arch-panel-content"
                     onClick={() => setActiveModeId(mode.id)}
-                    className={`relative min-h-[44px] cursor-pointer pb-3 text-[14px] font-medium whitespace-nowrap transition-colors duration-200 ${
+                    className={`relative min-h-[44px] shrink-0 cursor-pointer pb-3 text-[13px] font-medium whitespace-nowrap transition-colors duration-200 sm:text-[14px] ${
                       isSelected ? 'text-ink' : 'text-ink-muted hover:text-ink'
                     }`}
                   >
@@ -339,7 +348,7 @@ export function ArchitectureMonograph() {
                       <motion.span
                         layoutId="architecture-tab-rule"
                         transition={{ type: 'spring', stiffness: 360, damping: 32 }}
-                        className="absolute right-0 bottom-[-1px] left-0 h-[2px] bg-ink"
+                        className="absolute right-0 bottom-0 left-0 h-[2px] bg-ink"
                       />
                     )}
                   </button>
@@ -347,25 +356,31 @@ export function ArchitectureMonograph() {
               })}
             </div>
 
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeMode.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.36, ease: ARCHITECTURAL_EASE }}
-              >
-                <h2
-                  id="architecture-heading"
-                  className="max-w-[620px] text-balance text-[clamp(30px,3.2vw,46px)] leading-[1.1] font-medium tracking-[-0.045em] text-ink"
+            <div
+              id="arch-panel-content"
+              role="tabpanel"
+              aria-labelledby={`arch-tab-${activeMode.id}`}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeMode.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.36, ease: ARCHITECTURAL_EASE }}
                 >
-                  {activeMode.heading}
-                </h2>
-                <p className="mt-5 max-w-[590px] text-[16px] leading-[1.68] text-ink-secondary">
-                  {activeMode.body}
-                </p>
-              </motion.div>
-            </AnimatePresence>
+                  <h2
+                    id="architecture-heading"
+                    className="display-heading max-w-[620px] text-balance text-[clamp(30px,3.2vw,46px)] leading-[1.12] font-medium tracking-[-0.028em] text-ink"
+                  >
+                    {activeMode.heading}
+                  </h2>
+                  <p className="mt-5 max-w-[590px] text-[16px] leading-[1.68] text-ink-secondary">
+                    {activeMode.body}
+                  </p>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
 
           <div className="mt-10 border-t border-line pt-4 font-mono text-[12px] text-ink-muted">
@@ -410,6 +425,14 @@ export function ArchitectureMonograph() {
       {/* Lower Spread: Independent HMOS Model — Four Foundational Pillars */}
       <div id="principles" className="border-t border-line bg-canvas">
         <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-14">
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line py-4 font-mono text-[12px]">
+            <div className="flex items-center gap-3 text-violet">
+              <span aria-hidden="true" className="inline-block h-px w-5 bg-violet" />
+              <span>Independent HMOS Model</span>
+            </div>
+            <span className="text-ink-muted">Four foundational principles</span>
+          </div>
+
           <div className="grid grid-cols-1 divide-y divide-line md:grid-cols-2 md:divide-y-0 lg:grid-cols-4 lg:divide-x">
             {MODEL_PILLARS.map((pillar, idx) => (
               <motion.article
@@ -422,7 +445,7 @@ export function ArchitectureMonograph() {
                   delay: idx * 0.09,
                   ease: ARCHITECTURAL_EASE,
                 }}
-                className={`group relative flex flex-col justify-between py-9 transition-colors duration-300 hover:bg-surface/70 md:px-6 lg:py-11 ${
+                className={`group relative flex flex-col justify-between py-9 transition-colors duration-300 hover:bg-surface/75 md:px-6 lg:py-11 ${
                   idx === 0 ? 'md:pl-0 lg:pl-0 lg:pr-6' : ''
                 } ${idx === MODEL_PILLARS.length - 1 ? 'lg:pr-0' : ''} ${
                   idx >= 2 ? 'md:border-t md:border-line lg:border-t-0' : ''
@@ -430,13 +453,13 @@ export function ArchitectureMonograph() {
               >
                 <span
                   aria-hidden="true"
-                  className="pointer-events-none absolute top-[-1px] right-0 left-0 h-[1.5px] origin-left scale-x-0 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+                  className="pointer-events-none absolute top-[-1px] right-0 left-0 h-[1.5px] origin-left scale-x-0 bg-violet transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
                 />
                 <div>
-                  <span className="font-mono text-[12px] tabular-nums text-ink-muted transition-colors duration-300 group-hover:text-ink">
+                  <span className="font-mono text-[12px] tabular-nums text-ink-muted transition-colors duration-300 group-hover:text-violet">
                     {pillar.index}
                   </span>
-                  <h3 className="mt-4 text-[20px] leading-[1.2] font-semibold tracking-[-0.025em] text-ink">
+                  <h3 className="display-heading mt-4 text-[20px] leading-[1.22] font-semibold tracking-[-0.02em] text-ink">
                     {pillar.title}
                   </h3>
                   <p className="mt-2.5 text-[14px] leading-[1.5] font-medium text-ink-secondary">
