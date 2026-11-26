@@ -59,11 +59,18 @@ export function ProjectIndex({ onSelectProject }: ProjectIndexProps) {
                 delay: index * 0.09,
                 ease: ARCHITECTURAL_EASE,
               }}
-              whileHover={{ y: -4 }}
-              whileTap={{ scale: 0.992 }}
-              className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[6px] border border-line bg-surface text-left transition-colors duration-300 hover:border-line-strong"
+              whileHover={{ y: -5 }}
+              whileTap={{ scale: 0.99 }}
+              className="group relative flex cursor-pointer flex-col overflow-hidden rounded-[6px] border border-line bg-surface text-left shadow-[0_6px_22px_rgba(17,19,18,0.025)] transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-[0_20px_46px_rgba(17,19,18,0.08)]"
             >
-              {/* Typographic Architectural Poster Header (replaces random image pieces) */}
+              {/* Hover-activated top architectural mineral rule */}
+              <span
+                aria-hidden="true"
+                style={{ backgroundColor: project.accentHex }}
+                className="pointer-events-none absolute top-0 right-0 left-0 z-20 h-[2px] origin-left scale-x-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+              />
+
+              {/* Typographic Architectural Poster Header */}
               <div className="relative isolate flex min-h-[212px] w-full flex-col justify-between overflow-hidden border-b border-line bg-plinth p-6 sm:min-h-[228px] sm:p-7">
                 <ArchitecturalMotif
                   motifId={project.motifId}

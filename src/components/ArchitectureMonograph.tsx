@@ -414,22 +414,26 @@ export function ArchitectureMonograph() {
             {MODEL_PILLARS.map((pillar, idx) => (
               <motion.article
                 key={pillar.index}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 22 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.25 }}
                 transition={{
-                  duration: 0.56,
-                  delay: idx * 0.08,
+                  duration: 0.62,
+                  delay: idx * 0.09,
                   ease: ARCHITECTURAL_EASE,
                 }}
-                className={`flex flex-col justify-between py-9 md:px-6 lg:py-11 ${
-                  idx === 0 ? 'md:pl-0 lg:pl-0' : ''
+                className={`group relative flex flex-col justify-between py-9 transition-colors duration-300 hover:bg-surface/70 md:px-6 lg:py-11 ${
+                  idx === 0 ? 'md:pl-0 lg:pl-0 lg:pr-6' : ''
                 } ${idx === MODEL_PILLARS.length - 1 ? 'lg:pr-0' : ''} ${
                   idx >= 2 ? 'md:border-t md:border-line lg:border-t-0' : ''
                 } ${idx % 2 === 1 ? 'md:border-l md:border-line lg:border-l' : ''}`}
               >
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute top-[-1px] right-0 left-0 h-[1.5px] origin-left scale-x-0 bg-ink transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-x-100"
+                />
                 <div>
-                  <span className="font-mono text-[12px] tabular-nums text-ink-muted">
+                  <span className="font-mono text-[12px] tabular-nums text-ink-muted transition-colors duration-300 group-hover:text-ink">
                     {pillar.index}
                   </span>
                   <h3 className="mt-4 text-[20px] leading-[1.2] font-semibold tracking-[-0.025em] text-ink">

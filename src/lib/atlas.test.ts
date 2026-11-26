@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { stepProjectIndex, resolveProjectById, findConfidentialLeaks } from './atlas';
-import { PROJECTS, MODEL_PILLARS, STUDIO_BRIEF, STUDIO_META } from '../content/portfolio';
+import { PROJECTS, MODEL_PILLARS, STUDIO_META } from '../content/portfolio';
 
 test('stepProjectIndex cycles forward and backward cleanly', () => {
   assert.equal(stepProjectIndex(0, 1, 3), 1);
@@ -27,8 +27,6 @@ test('all portfolio projects define typographic plate headings and zero confiden
   const allCopy: string[] = [
     STUDIO_META.heroDescription,
     ...STUDIO_META.visionParagraphs,
-    STUDIO_BRIEF.lead,
-    ...STUDIO_BRIEF.sections.flatMap((s) => [s.heading, s.body]),
     ...MODEL_PILLARS.flatMap((p) => [p.title, p.subtitle, p.detail]),
   ];
 

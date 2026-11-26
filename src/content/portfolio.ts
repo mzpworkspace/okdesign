@@ -1,4 +1,4 @@
-import type { ArchitectureMode, BriefSection, ModelPillar, ProjectEntry } from '../lib/atlas';
+import type { ArchitectureMode, ModelPillar, ProjectEntry } from '../lib/atlas';
 
 export const STUDIO_META = {
   brand: 'Ideolect',
@@ -172,30 +172,3 @@ export const ARCHITECTURE_MODES: readonly ArchitectureMode[] = [
     footnote: 'Live interception · Bidirectional context · Minimal redacted proof',
   },
 ];
-
-export const STUDIO_BRIEF: {
-  readonly label: string;
-  readonly title: string;
-  readonly subtitle: string;
-  readonly lead: string;
-  readonly sections: readonly BriefSection[];
-} = {
-  label: 'Studio brief · Ideolect',
-  title: 'Independent Systems, Proven in the Work.',
-  subtitle: 'PenSuite · Pencore · Independent HMOS Model — by Ideolect',
-  lead: 'Ideolect is an independent systems studio building three cohesive instruments across security engineering, cybersecurity intelligence, and formal multi-model reasoning.',
-  sections: [
-    {
-      heading: 'I. Architectural Discipline',
-      body: 'Modern technical software is routinely fragmented into disconnected tools and opaque hosted wrappers. Ideolect designs each instrument from first principles around clear boundaries, verifiable outputs, and bidirectional feedback rather than linear guesswork.',
-    },
-    {
-      heading: 'II. PenSuite & Pencore',
-      body: 'PenSuite provides a high-discipline workbench for live traffic interception, multi-role replay, and minimal redacted proof. Pencore operates in bidirectional intelligence exchange with PenSuite — continuously separating observation, reachable sink, and demonstrated impact.',
-    },
-    {
-      heading: 'III. Independent HMOS Model',
-      body: 'Designed by Ideolect for logic, algorithms, experiments, proofs, and complex engineering, the HMOS Model combines a Unified Seven-Layer Brain with Verified Intelligence Training and Silicon-Native Optimization. Own weights · Own reasoning · Own solutions.',
-    },
-  ],
-};

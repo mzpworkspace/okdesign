@@ -1,10 +1,5 @@
 import { motion, useScroll, useSpring } from 'motion/react';
-import { FileText } from 'lucide-react';
 import { STUDIO_META } from '../content/portfolio';
-
-interface StudioHeaderProps {
-  readonly onOpenStudioBrief: () => void;
-}
 
 export function BrandMark({ className = 'w-[26px] h-[28px]' }: { readonly className?: string }) {
   return (
@@ -22,7 +17,7 @@ export function BrandMark({ className = 'w-[26px] h-[28px]' }: { readonly classN
   );
 }
 
-export function StudioHeader({ onOpenStudioBrief }: StudioHeaderProps) {
+export function StudioHeader() {
   const { scrollYProgress } = useScroll();
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 180,
@@ -36,7 +31,7 @@ export function StudioHeader({ onOpenStudioBrief }: StudioHeaderProps) {
       className="no-print sticky top-0 z-40 border-b border-line bg-canvas/88 backdrop-blur-md"
     >
       <div className="mx-auto flex h-[72px] w-full max-w-[1440px] items-center justify-between gap-8 px-5 sm:px-8 lg:px-14">
-        {/* Zone 1: Brand Wordmark */}
+        {/* Brand Wordmark */}
         <a
           href="#top"
           aria-label="Ideolect home"
@@ -46,51 +41,36 @@ export function StudioHeader({ onOpenStudioBrief }: StudioHeaderProps) {
           <span>{STUDIO_META.brand}</span>
         </a>
 
-        {/* Zone 2: Primary Navigation Links */}
+        {/* Primary Navigation Links */}
         <nav
           aria-label="Main navigation"
-          className="hidden items-center gap-8 text-[14px] font-medium text-ink-secondary md:flex"
+          className="flex items-center gap-5 text-[14px] font-medium text-ink-secondary sm:gap-8"
         >
           <a
             href="#systems"
-            className="nav-link-underline shrink-0 whitespace-nowrap py-2 transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink"
           >
             Systems
           </a>
           <a
             href="#architecture"
-            className="nav-link-underline shrink-0 whitespace-nowrap py-2 transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline hidden min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink sm:inline-flex"
           >
             Architecture
           </a>
           <a
             href="#principles"
-            className="nav-link-underline shrink-0 whitespace-nowrap py-2 transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline hidden min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink md:inline-flex"
           >
             Principles
           </a>
           <a
             href="#vision"
-            className="nav-link-underline shrink-0 whitespace-nowrap py-2 transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink"
           >
             Vision
           </a>
         </nav>
-
-        {/* Zone 3: Single Primary Action */}
-        <div className="flex shrink-0 items-center">
-          <motion.button
-            type="button"
-            onClick={onOpenStudioBrief}
-            whileHover={{ y: -1 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-            className="inline-flex min-h-[44px] shrink-0 cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-[5px] border border-line-strong bg-surface px-4 py-2 text-[14px] font-medium text-ink transition-colors duration-200 hover:border-ink hover:bg-ink hover:text-canvas"
-          >
-            <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>Studio brief</span>
-          </motion.button>
-        </div>
       </div>
 
       {/* Hairline scroll-depth indicator */}

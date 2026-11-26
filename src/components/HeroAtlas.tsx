@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
 import {
-  AnimatePresence,
   motion,
   useMotionValue,
   useSpring,
@@ -29,13 +28,15 @@ export function HeroAtlas({
   const activeProject = PROJECTS[activeIndex] ?? PROJECTS[0];
   const stageRef = useRef<HTMLDivElement>(null);
 
-  // Subtle pointer-reactive parallax on the architectural monograph plate
+  // Layered 3D spring parallax: subtle plate tilt + deeper blueprint motif shift
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
-  const smoothX = useSpring(pointerX, { stiffness: 120, damping: 24 });
-  const smoothY = useSpring(pointerY, { stiffness: 120, damping: 24 });
-  const motifX = useTransform(smoothX, [-0.5, 0.5], [-12, 12]);
-  const motifY = useTransform(smoothY, [-0.5, 0.5], [-9, 9]);
+  const smoothX = useSpring(pointerX, { stiffness: 130, damping: 22 });
+  const smoothY = useSpring(pointerY, { stiffness: 130, damping: 22 });
+  const plateRotateY = useTransform(smoothX, [-0.5, 0.5], [-3.2, 3.2]);
+  const plateRotateX = useTransform(smoothY, [-0.5, 0.5], [2.8, -2.8]);
+  const motifX = useTransform(smoothX, [-0.5, 0.5], [-16, 16]);
+  const motifY = useTransform(smoothY, [-0.5, 0.5], [-12, 12]);
 
   const handlePointerMove = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -84,7 +85,13 @@ export function HeroAtlas({
             transition={{ duration: 0.55, ease: ARCHITECTURAL_EASE }}
             className="flex items-center gap-3 font-mono text-[12px] tracking-[0.1em] text-bronze"
           >
-            <span aria-hidden="true" className="inline-block h-px w-7 bg-bronze" />
+            <motion.span
+              aria-hidden="true"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.65, ease: ARCHITECTURAL_EASE }}
+              className="inline-block h-px w-7 origin-left bg-bronze"
+            />
             <span>{STUDIO_META.kicker}</span>
           </motion.div>
 
@@ -94,9 +101,9 @@ export function HeroAtlas({
           >
             <span className="block overflow-hidden pb-[0.18em] -mb-[0.18em]">
               <motion.span
-                initial={{ y: '105%', opacity: 0 }}
+                initial={{ y: '108%', opacity: 0 }}
                 animate={{ y: '0%', opacity: 1 }}
-                transition={{ duration: 0.72, delay: 0.08, ease: ARCHITECTURAL_EASE }}
+                transition={{ duration: 0.78, delay: 0.08, ease: ARCHITECTURAL_EASE }}
                 className="block"
               >
                 {STUDIO_META.heroLineOne}
@@ -104,9 +111,9 @@ export function HeroAtlas({
             </span>
             <span className="block overflow-hidden pt-[0.04em] pb-[0.16em] -mb-[0.12em]">
               <motion.em
-                initial={{ y: '105%', opacity: 0 }}
+                initial={{ y: '108%', opacity: 0 }}
                 animate={{ y: '0%', opacity: 1 }}
-                transition={{ duration: 0.78, delay: 0.16, ease: ARCHITECTURAL_EASE }}
+                transition={{ duration: 0.84, delay: 0.18, ease: ARCHITECTURAL_EASE }}
                 style={{ color: activeProject.accentHex }}
                 className="block font-serif text-[1.06em] font-normal italic tracking-[-0.03em] transition-colors duration-500"
               >
@@ -116,58 +123,67 @@ export function HeroAtlas({
           </h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.24, ease: ARCHITECTURAL_EASE }}
+            transition={{ duration: 0.68, delay: 0.26, ease: ARCHITECTURAL_EASE }}
             className="max-w-[515px] text-[clamp(16px,1.2vw,19px)] leading-[1.6] text-ink-secondary"
           >
             {STUDIO_META.heroDescription}
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.32, ease: ARCHITECTURAL_EASE }}
+            transition={{ duration: 0.68, delay: 0.34, ease: ARCHITECTURAL_EASE }}
             className="mt-8 flex flex-wrap items-center gap-3.5"
           >
             <motion.a
               href="#systems"
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.985 }}
-              transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-flex min-h-[46px] shrink-0 items-center justify-center gap-2.5 whitespace-nowrap rounded-[5px] border border-ink bg-ink px-5 py-2.5 text-[14px] font-medium text-canvas transition-colors duration-200 hover:bg-ink-secondary"
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative inline-flex min-h-[46px] shrink-0 items-center justify-center gap-2.5 overflow-hidden whitespace-nowrap rounded-[5px] border border-ink bg-ink px-5 py-2.5 text-[14px] font-medium text-canvas transition-shadow duration-300 hover:shadow-[0_10px_24px_rgba(17,19,18,0.16)]"
             >
-              <LayoutGrid className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>Explore systems</span>
+              <LayoutGrid className="relative z-10 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:rotate-90" aria-hidden="true" />
+              <span className="relative z-10">Explore systems</span>
             </motion.a>
 
             <motion.a
               href="#vision"
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.985 }}
-              transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
               className="inline-flex min-h-[46px] shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[5px] border border-line-strong bg-surface px-5 py-2.5 text-[14px] font-medium text-ink transition-colors duration-200 hover:border-ink hover:bg-mist"
             >
               <span>Our vision</span>
             </motion.a>
           </motion.div>
 
-          {/* Subtle architectural index colophon */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.45, ease: ARCHITECTURAL_EASE }}
-            className="mt-12 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-line pt-5 font-mono text-[12px] text-ink-muted"
-          >
-            <span>PenSuite</span>
-            <span aria-hidden="true">·</span>
-            <span>Pencore</span>
-            <span aria-hidden="true">·</span>
-            <span>Independent HMOS Model</span>
-          </motion.div>
+          {/* Animated architectural index hairline colophon */}
+          <div className="relative mt-12 pt-5">
+            <motion.div
+              aria-hidden="true"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.85, delay: 0.4, ease: ARCHITECTURAL_EASE }}
+              className="absolute top-0 right-0 left-0 h-px origin-left bg-line"
+            />
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.5, ease: ARCHITECTURAL_EASE }}
+              className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[12px] text-ink-muted"
+            >
+              <span>PenSuite</span>
+              <span aria-hidden="true">·</span>
+              <span>Pencore</span>
+              <span aria-hidden="true">·</span>
+              <span>Independent HMOS Model</span>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Right Interactive Architectural Monograph Plate (Typographic + Purpose-Built Geometry) */}
+        {/* Right Interactive Architectural Monograph Plate (Layered 3D Parallax + Living Drafting Geometry) */}
         <div
           ref={stageRef}
           onPointerMove={handlePointerMove}
@@ -209,7 +225,7 @@ export function HeroAtlas({
                       {isActive && (
                         <motion.span
                           layoutId="atlas-active-bar"
-                          transition={{ type: 'spring', stiffness: 360, damping: 30 }}
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                           style={{ backgroundColor: project.accentHex }}
                           className="absolute right-2.5 bottom-2 left-2.5 h-[1.5px]"
                         />
@@ -227,95 +243,115 @@ export function HeroAtlas({
             </div>
           </div>
 
-          {/* Center Typographic Architectural Plate */}
-          <div className="my-5 flex flex-1 items-center">
-            <button
+          {/* Center Typographic Architectural Plate with Perspective */}
+          <div className="my-5 flex flex-1 items-center [perspective:1200px]">
+            <motion.button
               type="button"
               onClick={() => onInspectProject(activeProject)}
               aria-label={`Open architectural brief for ${activeProject.name}`}
-              className="group relative flex min-h-[340px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-[6px] border border-line bg-surface p-7 text-left transition-colors duration-300 hover:border-line-strong sm:min-h-[385px] sm:p-9 lg:min-h-[415px] lg:p-10"
+              style={{
+                rotateX: plateRotateX,
+                rotateY: plateRotateY,
+              }}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.992 }}
+              transition={{ duration: 0.25, ease: ARCHITECTURAL_EASE }}
+              className="group relative flex min-h-[340px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-[6px] border border-line bg-surface p-7 text-left shadow-[0_14px_40px_rgba(17,19,18,0.045)] transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-[0_22px_54px_rgba(17,19,18,0.08)] sm:min-h-[385px] sm:p-9 lg:min-h-[415px] lg:p-10"
             >
+              {/* Animated Top Mineral Accent Rule */}
+              <motion.span
+                key={`top-rule-${activeProject.id}`}
+                aria-hidden="true"
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
+                transition={{ duration: 0.65, ease: ARCHITECTURAL_EASE }}
+                style={{ backgroundColor: activeProject.accentHex }}
+                className="pointer-events-none absolute top-0 right-0 left-0 z-20 h-[2px] origin-left opacity-80"
+              />
+
               {/* Purpose-built parallax architectural backdrop */}
-              <AnimatePresence initial={false} mode="popLayout">
-                <motion.div
-                  key={`motif-${activeProject.id}`}
-                  initial={{ opacity: 0, scale: 0.97 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.45, ease: ARCHITECTURAL_EASE }}
-                  style={{ x: motifX, y: motifY }}
-                  className="pointer-events-none absolute -inset-4 will-change-transform"
-                >
-                  <ArchitecturalMotif
-                    motifId={activeProject.motifId}
-                    accentHex={activeProject.accentHex}
-                    variant="hero"
-                  />
-                </motion.div>
-              </AnimatePresence>
+              <motion.div
+                key={`motif-${activeProject.id}`}
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.48, ease: ARCHITECTURAL_EASE }}
+                style={{ x: motifX, y: motifY }}
+                className="pointer-events-none absolute -inset-5 z-0 will-change-transform"
+              >
+                <ArchitecturalMotif
+                  motifId={activeProject.motifId}
+                  accentHex={activeProject.accentHex}
+                  variant="hero"
+                />
+              </motion.div>
 
               {/* Corner Architectural L-Tick */}
               <span
                 aria-hidden="true"
                 style={{ borderColor: activeProject.accentHex }}
-                className="pointer-events-none absolute top-4 left-4 h-3.5 w-3.5 border-t-[1.5px] border-l-[1.5px] opacity-75 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100"
+                className="pointer-events-none absolute top-4 left-4 z-20 h-3.5 w-3.5 border-t-[1.5px] border-l-[1.5px] opacity-75 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100"
               />
 
               {/* Typographic Foreground */}
-              <div className="relative z-10 flex h-full flex-1 flex-col justify-between">
-                <AnimatePresence initial={false} mode="wait">
-                  <motion.div
-                    key={activeProject.id}
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.32, ease: ARCHITECTURAL_EASE }}
-                    className="flex h-full flex-1 flex-col justify-between"
-                  >
-                    <div>
-                      <div className="flex items-center justify-between gap-4">
+              <motion.div
+                key={activeProject.id}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.42, ease: ARCHITECTURAL_EASE }}
+                className="relative z-10 flex h-full flex-1 flex-col justify-between"
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-4">
+                    <span
+                      style={{ color: activeProject.accentHex }}
+                      className="font-mono text-[12px] tracking-[0.08em]"
+                    >
+                      {activeProject.plateEyebrow}
+                    </span>
+                    <span className="font-mono text-[11px] tabular-nums text-ink-muted">
+                      {activeProject.formLabel}
+                    </span>
+                  </div>
+
+                  <h2 className="mt-7 max-w-[440px] text-balance text-[clamp(34px,3.6vw,50px)] leading-[1.04] font-medium tracking-[-0.048em] text-ink">
+                    {activeProject.plateHeadline}
+                  </h2>
+
+                  <p className="mt-4 max-w-[410px] text-[15px] leading-[1.62] text-ink-secondary">
+                    {activeProject.plateSubline}
+                  </p>
+                </div>
+
+                {/* Disciplined Staggered 3-Point Typographic Specification Rail */}
+                <div className="mt-8 border-t border-line/90 pt-5">
+                  <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-3 sm:gap-4">
+                    {activeProject.platePoints.map((point, i) => (
+                      <motion.li
+                        key={point}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 0.38,
+                          delay: 0.08 + i * 0.06,
+                          ease: ARCHITECTURAL_EASE,
+                        }}
+                        className="flex flex-col gap-1"
+                      >
                         <span
                           style={{ color: activeProject.accentHex }}
-                          className="font-mono text-[12px] tracking-[0.08em]"
+                          className="font-mono text-[10.5px] tabular-nums"
                         >
-                          {activeProject.plateEyebrow}
+                          0{i + 1}
                         </span>
-                        <span className="font-mono text-[11px] tabular-nums text-ink-muted">
-                          {activeProject.formLabel}
+                        <span className="text-[13px] leading-[1.35] font-medium text-ink">
+                          {point}
                         </span>
-                      </div>
-
-                      <h2 className="mt-7 max-w-[440px] text-balance text-[clamp(34px,3.6vw,50px)] leading-[1.04] font-medium tracking-[-0.048em] text-ink">
-                        {activeProject.plateHeadline}
-                      </h2>
-
-                      <p className="mt-4 max-w-[410px] text-[15px] leading-[1.62] text-ink-secondary">
-                        {activeProject.plateSubline}
-                      </p>
-                    </div>
-
-                    {/* Disciplined 3-Point Typographic Specification Rail */}
-                    <div className="mt-8 border-t border-line/90 pt-5">
-                      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-4">
-                        {activeProject.platePoints.map((point, i) => (
-                          <li key={point} className="flex flex-col gap-1">
-                            <span
-                              style={{ color: activeProject.accentHex }}
-                              className="font-mono text-[10.5px] tabular-nums"
-                            >
-                              0{i + 1}
-                            </span>
-                            <span className="text-[13px] leading-[1.35] font-medium text-ink">
-                              {point}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </button>
+                      </motion.li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </motion.button>
           </div>
 
           {/* Bottom Atlas Caption & Step Controls */}
@@ -326,22 +362,19 @@ export function HeroAtlas({
                 style={{ backgroundColor: activeProject.accentHex }}
                 className="h-[1.5px] w-6 shrink-0 transition-colors duration-500"
               />
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeProject.id}
-                  initial={{ opacity: 0, y: 6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.24, ease: ARCHITECTURAL_EASE }}
-                  className="flex items-center gap-2 font-mono text-[12px] tracking-[0.05em] text-ink-secondary"
-                >
-                  <span className="font-medium text-ink">{activeProject.name}</span>
-                  <span aria-hidden="true" className="text-ink-muted">
-                    /
-                  </span>
-                  <span className="text-ink-muted">{activeProject.discipline}</span>
-                </motion.div>
-              </AnimatePresence>
+              <motion.div
+                key={`caption-${activeProject.id}`}
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.28, ease: ARCHITECTURAL_EASE }}
+                className="flex items-center gap-2 font-mono text-[12px] tracking-[0.05em] text-ink-secondary"
+              >
+                <span className="font-medium text-ink">{activeProject.name}</span>
+                <span aria-hidden="true" className="text-ink-muted">
+                  /
+                </span>
+                <span className="text-ink-muted">{activeProject.discipline}</span>
+              </motion.div>
             </div>
 
             <div className="flex items-center gap-2">
@@ -358,7 +391,7 @@ export function HeroAtlas({
                 <motion.button
                   type="button"
                   onClick={() => onStep(-1)}
-                  whileTap={{ scale: 0.94 }}
+                  whileTap={{ scale: 0.92 }}
                   aria-label="Previous system in atlas"
                   className="grid h-[44px] w-[44px] cursor-pointer place-items-center rounded-[4px] border border-line bg-surface text-ink transition-colors duration-200 hover:border-ink hover:bg-mist"
                 >
@@ -367,7 +400,7 @@ export function HeroAtlas({
                 <motion.button
                   type="button"
                   onClick={() => onStep(1)}
-                  whileTap={{ scale: 0.94 }}
+                  whileTap={{ scale: 0.92 }}
                   aria-label="Next system in atlas"
                   className="grid h-[44px] w-[44px] cursor-pointer place-items-center rounded-[4px] border border-line bg-surface text-ink transition-colors duration-200 hover:border-ink hover:bg-mist"
                 >

@@ -92,6 +92,91 @@
   background-size: 24px 24px;
 }
 
+/* Living architectural blueprint motion (pure compositor / SVG stroke keyframes) */
+@keyframes arch-orbit-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes arch-orbit-ccw {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes arch-flow-forward {
+  from {
+    stroke-dashoffset: 240;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes arch-flow-reverse {
+  from {
+    stroke-dashoffset: -240;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes arch-seam-sweep {
+  0%,
+  100% {
+    transform: translate3d(-24px, 0, 0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(52px, 0, 0);
+    opacity: 0.95;
+  }
+}
+
+@keyframes arch-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.32;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 0.65;
+  }
+}
+
+.arch-orbit-cw {
+  animation: arch-orbit-cw 26s linear infinite;
+}
+
+.arch-orbit-ccw {
+  animation: arch-orbit-ccw 34s linear infinite;
+}
+
+.arch-flow-forward {
+  animation: arch-flow-forward 4.2s linear infinite;
+}
+
+.arch-flow-reverse {
+  animation: arch-flow-reverse 4.2s linear infinite;
+}
+
+.arch-seam-sweep {
+  animation: arch-seam-sweep 5.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.arch-breathe {
+  animation: arch-breathe 4.8s ease-in-out infinite;
+}
+
 /* Quiet architectural underline animation on nav links */
 .nav-link-underline {
   position: relative;

@@ -1,31 +1,41 @@
-import { motion } from 'motion/react';
-import { ArrowUp, FileText } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
+import { ArrowUp } from 'lucide-react';
 import { PROJECTS, STUDIO_META } from '../content/portfolio';
 import type { ProjectEntry } from '../lib/atlas';
 import { BrandMark } from './StudioHeader';
 
 interface StudioVisionProps {
-  readonly onOpenStudioBrief: () => void;
   readonly onSelectProject: (project: ProjectEntry) => void;
 }
 
 const ARCHITECTURAL_EASE = [0.22, 1, 0.36, 1] as const;
 
-export function StudioVision({ onOpenStudioBrief, onSelectProject }: StudioVisionProps) {
+export function StudioVision({ onSelectProject }: StudioVisionProps) {
+  const visionRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: visionRef,
+    offset: ['start end', 'end start'],
+  });
+  const headingY = useTransform(scrollYProgress, [0, 1], [14, -14]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [24, -10]);
+
   return (
     <>
       <section
+        ref={visionRef}
         id="vision"
         aria-labelledby="vision-heading"
-        className="border-b border-line bg-mist py-16 sm:py-20 lg:py-24"
+        className="overflow-hidden border-b border-line bg-mist py-16 sm:py-20 lg:py-24"
       >
         <div className="mx-auto grid w-full max-w-[1440px] grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-2 lg:gap-16 lg:px-14">
           <motion.div
+            style={{ y: headingY }}
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, ease: ARCHITECTURAL_EASE }}
-            className="flex flex-col justify-between"
+            className="flex flex-col justify-between will-change-transform"
           >
             <div>
               <div className="mb-4 flex items-center gap-3 font-mono text-[12px] tracking-[0.1em] text-bronze">
@@ -46,29 +56,18 @@ export function StudioVision({ onOpenStudioBrief, onSelectProject }: StudioVisio
           </motion.div>
 
           <motion.div
+            style={{ y: copyY }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.65, delay: 0.1, ease: ARCHITECTURAL_EASE }}
-            className="max-w-[580px] text-[16px] leading-[1.7] text-ink-secondary"
+            className="max-w-[580px] text-[16px] leading-[1.7] text-ink-secondary will-change-transform"
           >
             {STUDIO_META.visionParagraphs.map((paragraph, idx) => (
               <p key={idx} className={idx > 0 ? 'mt-4' : undefined}>
                 {paragraph}
               </p>
             ))}
-
-            <motion.button
-              type="button"
-              onClick={onOpenStudioBrief}
-              whileHover={{ y: -1 }}
-              whileTap={{ scale: 0.985 }}
-              transition={{ duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-8 inline-flex min-h-[46px] cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-[5px] border border-ink bg-surface px-5 py-2.5 text-[14px] font-medium text-ink transition-colors duration-200 hover:bg-ink hover:text-canvas"
-            >
-              <FileText className="h-4 w-4 shrink-0" aria-hidden="true" />
-              <span>Read the studio brief</span>
-            </motion.button>
           </motion.div>
         </div>
       </section>
