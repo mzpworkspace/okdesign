@@ -74,6 +74,8 @@ const FORBIDDEN_INTERNAL_PATTERNS: readonly RegExp[] = [
   /\binternal\/grid\b/i,
   /\binternal\/evolution\b/i,
   /\blorem ipsum\b/i,
+  /\bstorive\b/i,
+  /\$?250,?000/i,
 ];
 
 export function findConfidentialLeaks(textBlocks: readonly string[]): string[] {

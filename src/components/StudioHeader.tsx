@@ -35,7 +35,7 @@ export function StudioHeader() {
         <a
           href="#top"
           aria-label="Ideolect home"
-          className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-[22px] font-semibold tracking-[-0.045em] text-ink transition-opacity duration-200 hover:opacity-80"
+          className="inline-flex min-h-[44px] shrink-0 items-center gap-2.5 whitespace-nowrap text-[22px] font-semibold tracking-[-0.03em] text-ink transition-opacity duration-200 hover:opacity-80"
         >
           <BrandMark className="h-[26px] w-[24px] text-bronze" />
           <span>{STUDIO_META.brand}</span>
@@ -44,29 +44,29 @@ export function StudioHeader() {
         {/* Primary Navigation Links */}
         <nav
           aria-label="Main navigation"
-          className="flex items-center gap-5 text-[14px] font-medium text-ink-secondary sm:gap-8"
+          className="flex items-center gap-4 text-[14px] font-medium text-ink-secondary sm:gap-7"
         >
           <a
             href="#systems"
-            className="nav-link-underline inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center px-1 whitespace-nowrap transition-colors duration-200 hover:text-ink"
           >
             Systems
           </a>
           <a
             href="#architecture"
-            className="nav-link-underline hidden min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink sm:inline-flex"
+            className="nav-link-underline hidden min-h-[44px] min-w-[44px] shrink-0 items-center justify-center px-1 whitespace-nowrap transition-colors duration-200 hover:text-ink sm:inline-flex"
           >
             Architecture
           </a>
           <a
             href="#principles"
-            className="nav-link-underline hidden min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink md:inline-flex"
+            className="nav-link-underline hidden min-h-[44px] min-w-[44px] shrink-0 items-center justify-center px-1 whitespace-nowrap transition-colors duration-200 hover:text-ink md:inline-flex"
           >
             Principles
           </a>
           <a
             href="#vision"
-            className="nav-link-underline inline-flex min-h-[44px] shrink-0 items-center whitespace-nowrap transition-colors duration-200 hover:text-ink"
+            className="nav-link-underline inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center px-1 whitespace-nowrap transition-colors duration-200 hover:text-ink"
           >
             Vision
           </a>

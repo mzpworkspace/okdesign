@@ -97,7 +97,7 @@ export function HeroAtlas({
 
           <h1
             id="hero-title"
-            className="mt-6 mb-6 text-balance text-[clamp(52px,6.3vw,98px)] leading-[0.98] font-medium tracking-[-0.055em] text-ink"
+            className="display-heading mt-6 mb-6 text-balance text-[clamp(52px,6.3vw,96px)] leading-[0.99] font-medium tracking-[-0.036em] text-ink"
           >
             <span className="block overflow-hidden pb-[0.18em] -mb-[0.18em]">
               <motion.span
@@ -115,7 +115,7 @@ export function HeroAtlas({
                 animate={{ y: '0%', opacity: 1 }}
                 transition={{ duration: 0.84, delay: 0.18, ease: ARCHITECTURAL_EASE }}
                 style={{ color: activeProject.accentHex }}
-                className="block font-serif text-[1.06em] font-normal italic tracking-[-0.03em] transition-colors duration-500"
+                className="block font-serif text-[1.06em] font-normal italic tracking-[-0.02em] transition-colors duration-500"
               >
                 {STUDIO_META.heroLineTwo}
               </motion.em>
@@ -159,8 +159,8 @@ export function HeroAtlas({
             </motion.a>
           </motion.div>
 
-          {/* Animated architectural index hairline colophon */}
-          <div className="relative mt-12 pt-5">
+          {/* Interactive architectural system index colophon synced with Atlas */}
+          <div className="relative mt-10 pt-3 sm:mt-12">
             <motion.div
               aria-hidden="true"
               initial={{ scaleX: 0 }}
@@ -172,13 +172,33 @@ export function HeroAtlas({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.5, ease: ARCHITECTURAL_EASE }}
-              className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[12px] text-ink-muted"
+              className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[12px]"
             >
-              <span>PenSuite</span>
-              <span aria-hidden="true">·</span>
-              <span>Pencore</span>
-              <span aria-hidden="true">·</span>
-              <span>Independent HMOS Model</span>
+              {PROJECTS.map((project, idx) => {
+                const isSelected = idx === activeIndex;
+                return (
+                  <div key={project.id} className="inline-flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => onSelectIndex(idx)}
+                      aria-pressed={isSelected}
+                      style={isSelected ? { color: project.accentHex } : undefined}
+                      className={`inline-flex min-h-[44px] cursor-pointer items-center whitespace-nowrap px-1 transition-colors duration-200 ${
+                        isSelected
+                          ? 'font-medium'
+                          : 'text-ink-muted hover:text-ink'
+                      }`}
+                    >
+                      {project.id === 'hmos-model' ? 'Independent HMOS Model' : project.name}
+                    </button>
+                    {idx < PROJECTS.length - 1 && (
+                      <span aria-hidden="true" className="text-line-strong">
+                        ·
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
             </motion.div>
           </div>
         </div>
@@ -212,9 +232,11 @@ export function HeroAtlas({
                   return (
                     <button
                       key={project.id}
+                      id={`atlas-tab-${project.id}`}
                       type="button"
                       role="tab"
                       aria-selected={isActive}
+                      aria-controls="atlas-plate-panel"
                       aria-label={`View ${project.name} in system atlas`}
                       onClick={() => onSelectIndex(idx)}
                       className={`relative min-h-[44px] min-w-[44px] cursor-pointer font-mono text-[12px] tabular-nums transition-colors duration-200 ${
@@ -244,7 +266,12 @@ export function HeroAtlas({
           </div>
 
           {/* Center Typographic Architectural Plate with Perspective */}
-          <div className="my-5 flex flex-1 items-center [perspective:1200px]">
+          <div
+            id="atlas-plate-panel"
+            role="tabpanel"
+            aria-labelledby={`atlas-tab-${activeProject.id}`}
+            className="my-5 flex flex-1 items-center [perspective:1200px]"
+          >
             <motion.button
               type="button"
               onClick={() => onInspectProject(activeProject)}
@@ -256,7 +283,7 @@ export function HeroAtlas({
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.992 }}
               transition={{ duration: 0.25, ease: ARCHITECTURAL_EASE }}
-              className="group relative flex min-h-[340px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-[6px] border border-line bg-surface p-7 text-left shadow-[0_14px_40px_rgba(17,19,18,0.045)] transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-[0_22px_54px_rgba(17,19,18,0.08)] sm:min-h-[385px] sm:p-9 lg:min-h-[415px] lg:p-10"
+              className="group relative flex min-h-[345px] w-full cursor-pointer flex-col justify-between overflow-hidden rounded-[6px] border border-line bg-surface p-6 text-left shadow-[0_14px_40px_rgba(17,19,18,0.045)] transition-[border-color,box-shadow] duration-300 hover:border-line-strong hover:shadow-[0_22px_54px_rgba(17,19,18,0.08)] sm:min-h-[385px] sm:p-9 lg:min-h-[415px] lg:p-10"
             >
               {/* Animated Top Mineral Accent Rule */}
               <motion.span
@@ -285,11 +312,17 @@ export function HeroAtlas({
                 />
               </motion.div>
 
+              {/* Soft directional scrim ensuring foreground typography never fights blueprint lines */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-surface/94 via-surface/65 to-transparent"
+              />
+
               {/* Corner Architectural L-Tick */}
               <span
                 aria-hidden="true"
                 style={{ borderColor: activeProject.accentHex }}
-                className="pointer-events-none absolute top-4 left-4 z-20 h-3.5 w-3.5 border-t-[1.5px] border-l-[1.5px] opacity-75 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100"
+                className="pointer-events-none absolute top-3 left-3 z-20 h-3 w-3 border-t-[1.5px] border-l-[1.5px] opacity-75 transition-all duration-300 group-hover:h-4 group-hover:w-4 group-hover:opacity-100 sm:top-4 sm:left-4 sm:h-3.5 sm:w-3.5"
               />
 
               {/* Typographic Foreground */}
@@ -298,22 +331,22 @@ export function HeroAtlas({
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.42, ease: ARCHITECTURAL_EASE }}
-                className="relative z-10 flex h-full flex-1 flex-col justify-between"
+                className="relative z-10 flex h-full flex-1 flex-col justify-between pt-1.5 sm:pt-0"
               >
                 <div>
                   <div className="flex items-center justify-between gap-4">
                     <span
                       style={{ color: activeProject.accentHex }}
-                      className="font-mono text-[12px] tracking-[0.08em]"
+                      className="font-mono text-[11.5px] tracking-[0.06em] whitespace-nowrap sm:text-[12px] sm:tracking-[0.08em]"
                     >
                       {activeProject.plateEyebrow}
                     </span>
-                    <span className="font-mono text-[11px] tabular-nums text-ink-muted">
+                    <span className="hidden font-mono text-[11px] tabular-nums whitespace-nowrap text-ink-muted sm:inline">
                       {activeProject.formLabel}
                     </span>
                   </div>
 
-                  <h2 className="mt-7 max-w-[440px] text-balance text-[clamp(34px,3.6vw,50px)] leading-[1.04] font-medium tracking-[-0.048em] text-ink">
+                  <h2 className="display-heading mt-6 max-w-[440px] text-balance text-[clamp(30px,3.6vw,48px)] leading-[1.06] font-medium tracking-[-0.028em] text-ink sm:mt-7">
                     {activeProject.plateHeadline}
                   </h2>
 

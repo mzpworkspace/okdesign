@@ -177,6 +177,20 @@
   animation: arch-breathe 4.8s ease-in-out infinite;
 }
 
+/* Calibrated display kerning: sculpted letter-spacing with crisp word boundaries */
+.display-heading {
+  word-spacing: 0.045em;
+}
+
+/* Hide horizontal scrollbar on compact mobile tab rails while keeping scrollability */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 /* Quiet architectural underline animation on nav links */
 .nav-link-underline {
   position: relative;
@@ -216,7 +230,7 @@
   }
 }
 
-/* Clean archival print layout for the Studio Brief modal */
+/* Clean archival print layout for system briefs */
 @media print {
   body {
     background: #ffffff !important;
