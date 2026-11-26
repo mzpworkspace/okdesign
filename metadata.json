@@ -1,6 +1,8 @@
 {
-  "name": "HMOS® — Systems for Sovereignty, Made for Certainty",
-  "description": "Official brand and architectural showcase website for HMOS (Hybrid Master Operating System), founded and architected by Mahammadali Palsaniya.",
+  "name": "Ideolect \u2014 Intelligence, in formation.",
+  "description": "Ideolect is an independent software company building PenSuite, Pencore and Cortex 7.2 across creative software, security intelligence and multi-model engineering.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

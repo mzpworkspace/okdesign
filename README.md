@@ -1,20 +1,40 @@
-# HMOS™ — Systems for Sovereignty, Made for Certainty (`storive.in`)
+# Ideolect
 
-Official architectural showcase and interactive 3D/kinetic web studio for **HMOS™ (Hybrid Master Operating System)**, founded and architected by **Mahammadali Palsaniya** (*Founder & Principal Systems Architect, HMOS · DeepTech & Sovereign AI Infrastructure, India*).
+Company website for **PenSuite**, **Pencore**, and **Cortex 7.2** at [www.storive.in](https://www.storive.in/). The design adapts the supplied *Ideolect Systems Portfolio* artwork into a product-focused company website. Product descriptions represent work in development, without unverified performance, customer, or funding claims.
 
-- **Official Live Domain (Netlify):** [https://www.storive.in](https://www.storive.in)
-- **Direct Cloud Run Live URL:** [https://ais-pre-7j3wsnftor5suogjpqkbf6-225707887467.asia-east1.run.app](https://ais-pre-7j3wsnftor5suogjpqkbf6-225707887467.asia-east1.run.app)
-- **Founder LinkedIn:** [Mahammadali Palsaniya](https://www.linkedin.com/in/mhdali-palsaniya-68233923b)
+## Develop and build
 
----
+Use the existing Node/npm versions declared in `package.json` and the repository's existing installation policy:
 
-## Verified Architectural Benchmarks
+```sh
+npm install --legacy-peer-deps
+npm run dev
+npm run build
+npx tsc --noEmit
+node scripts/verify-site.mjs
+```
 
-1. **35/35 on our internal workflow test suite (architecture prototype, in development):**
-   Targets the `0.98^35 = 49.3%` compound failure decay of probabilistic prompt wrappers.
-2. **Stage 05 AST De-Bloat & Guard-Parity Compiler:**
-   Strips **37.7% – 41.7%** of redundant OOP wrapper lines (`0` executable classes) while mathematically proving **100% safety guard-clause retention**.
-3. **Stage 07 Distributed Entropy & Quorum Lock:**
-   Enforces monotonic Lamport Vector Clocks and a strict **Shannon Entropy ceiling (`<= 0.250 bits`)** across 5 distributed worker nodes.
-4. **8-Invariant On-Disk Cryptographic Verification:**
-   Verifies all 8 core architecture invariants via **on-disk cryptographic digests** with an 8-Pillar Zero-Trust lock (`status == 'verified'`, no delete / no merge).
+The production output is `dist/`. No new dependencies or runtime services are required by the redesign.
+
+## Content and components
+
+- `src/data/portfolio.json` contains the shared product and company copy.
+- `src/components/ProductShowcase.tsx` implements the keyboard-accessible product selector.
+- `src/components/SystemAtlas.tsx` controls the hero artwork gallery.
+- `src/components/BriefDialog.tsx` provides native modal briefs with Escape, focus restoration and print support.
+- `src/components/CompanySections.tsx` contains the company story, engineering philosophy and contact sections.
+- `public/images/` contains the three supplied WebP artworks and the social sharing card.
+- `public/catalogs/Ideolect-Company-Brief.pdf` is the four-page company/product document, linked from the website.
+
+To regenerate the PDF and social card from the shared copy and supplied artwork, run `python3 scripts/generate-brand-assets.py` in a Python environment with Pillow and ReportLab installed. The script uses DejaVu fonts at `/usr/share/fonts/truetype/dejavu/`. These tools are only needed for editorial asset regeneration; deployment uses the committed assets.
+
+## Existing hosting connections
+
+The redesign preserves `.github/workflows/deploy.yml`, `CNAME`, `public/CNAME`, `public/.htaccess`, `public/_redirects`, `public/sitemap.xml`, `netlify.toml`, `vite.config.ts`, `.env.example`, `.npmrc`, `package.json`, and `tsconfig.json`. It also preserves the capability and permission fields in `metadata.json`, the public contact email, founder LinkedIn destination, and canonical `https://www.storive.in/` URL. No DNS records, secrets, webhooks or repository settings are modified.
+
+Two pre-existing hosting details require attention before publishing:
+
+- Root `CNAME` contains `storive.com`; `public/CNAME`, copied by Vite into `dist/CNAME`, contains `www.storive.in`. Both are preserved exactly.
+- The existing main-branch deployment workflow includes a cleanup step that deletes external deployment records and Cloudflare webhooks and neutralizes external checks. The design branch does not trigger that workflow. Review that step before merging if those integrations must remain intact.
+
+This change replaces only the old presentation source, imagery, and catalogs. Historical HMOS PDF paths are removed; the current document is `/catalogs/Ideolect-Company-Brief.pdf`.

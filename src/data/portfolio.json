@@ -1,0 +1,117 @@
+{
+  "projects": [
+    {
+      "id": "pensuite",
+      "name": "PenSuite",
+      "category": "Creative workspace",
+      "form": "Folded planes",
+      "alt": "Layered mint-green sheets etched with fine parallel lines",
+      "color": "#99cdbb",
+      "summary": "PenSuite is being developed as a creative workspace where interface design, interaction states and the decisions behind them belong together.",
+      "blocks": [
+        [
+          "The product",
+          "An interface is more than a finished screen. PenSuite’s direction brings the canvas, the behavior and the reason for a design decision into one workspace."
+        ],
+        [
+          "What we are building toward",
+          "A place to shape a flow, explore its states and carry the important decisions into implementation. The aim is to make design intent understandable to the person building the product."
+        ],
+        [
+          "The standard",
+          "A beautiful screen must also explain how it behaves. Empty states, error states and the transitions between them deserve the same care as the first impression."
+        ]
+      ],
+      "headline": "Give the idea a shape.",
+      "audience": "For designers & product builders",
+      "focus": [
+        "Interface design",
+        "Interaction states",
+        "Design intent"
+      ],
+      "description": "A creative workspace for turning ideas into interfaces with intent."
+    },
+    {
+      "id": "pencore",
+      "name": "Pencore",
+      "category": "Cybersecurity intelligence",
+      "form": "Signal knot",
+      "alt": "Copper filaments wrapped around an interlocking trefoil knot",
+      "color": "#ee9c65",
+      "summary": "Pencore is being built to connect Android, web and API security research with reproducible evidence, keeping the path from attack surface to a defensible finding intact.",
+      "blocks": [
+        [
+          "The product",
+          "Security research crosses boundaries: an Android package, a browser identity, a session, an API permission. Pencore’s focus is to connect those observations into investigations that explain the root cause and impact."
+        ],
+        [
+          "What we are building toward",
+          "An integrated research workflow spanning scoped discovery, controlled execution, role and session comparison, and evidence-backed findings. The researcher retains control of the final report and submission."
+        ],
+        [
+          "The standard",
+          "A finding must identify the affected artifact, preserve the reproduction and explain the impact. Broad offensive coverage matters; so does the ability to stand behind every result."
+        ]
+      ],
+      "headline": "Find the weakness.\nKeep the proof.",
+      "audience": "For independent security researchers",
+      "focus": [
+        "Android",
+        "Web applications",
+        "APIs"
+      ],
+      "description": "Offensive security intelligence. From attack surface to defensible evidence."
+    },
+    {
+      "id": "cortex",
+      "name": "Cortex 7.2",
+      "category": "Multi-model agent",
+      "form": "Reasoning field",
+      "alt": "A violet wireframe sphere with sculpted, undulating ridges",
+      "color": "#bfabd6",
+      "summary": "Cortex 7.2 is a multi-model engineering agent in development, designed to carry a request through reasoning, code changes and checks that can be examined.",
+      "blocks": [
+        [
+          "The product",
+          "The engineering task is larger than generating code. Cortex 7.2’s direction connects the original intent, the constraints, the implementation and the evidence of what actually ran."
+        ],
+        [
+          "What we are building toward",
+          "A deliberate engineering workflow: understand the request, reason about the change, execute the relevant checks and make unresolved questions visible. A longer-term HMOS research direction explores an independently trained scientific coding model."
+        ],
+        [
+          "The standard",
+          "A convincing answer is not a verified result. The work should expose its assumptions and distinguish a successful check from a claim that still needs evidence."
+        ]
+      ],
+      "headline": "Reason deeply.\nBuild deliberately.",
+      "audience": "For developers & engineering teams",
+      "focus": [
+        "Multi-model reasoning",
+        "Code execution",
+        "Verification"
+      ],
+      "description": "A multi-model engineering agent connecting intent, code and verification."
+    }
+  ],
+  "brief": {
+    "name": "The Ideolect perspective",
+    "category": "Company brief",
+    "color": "#ee9c65",
+    "summary": "We are building software for three demanding kinds of work: shaping an interface, investigating its security and engineering the systems behind it.",
+    "blocks": [
+      [
+        "One company. Three disciplines.",
+        "PenSuite explores the creative workspace. Pencore develops security intelligence. Cortex 7.2 explores multi-model engineering. Each product has a distinct purpose, with a shared commitment to clear intent and inspectable work."
+      ],
+      [
+        "Depth is the direction",
+        "We believe the details that make software useful are also the details that make it trustworthy: an interaction state, a preserved reproduction, a test that can be rerun. The ambition is to give those details a proper home."
+      ],
+      [
+        "Built from India",
+        "Ideolect is an independent software company founded by Mahammadali Palsaniya. Our products are in development. This brief describes their direction and the standards guiding the work."
+      ]
+    ]
+  }
+}
