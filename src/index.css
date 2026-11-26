@@ -1,57 +1,155 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --font-mechanik: 'Archivo', 'Plus Jakarta Sans', 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-    --font-mono: 'Space Grotesk', 'JetBrains Mono', monospace;
-  }
+@theme {
+  /* Architectural Light-Mode Gallery Palette (60-30-10) */
+  --color-canvas: #F7F8F7;
+  --color-surface: #FFFFFF;
+  --color-mist: #EEF0EE;
+  --color-plinth: #F2F4F2;
+  --color-ink: #111312;
+  --color-ink-secondary: #3E4340;
+  --color-ink-muted: #5C615E;
+  --color-line: #DCDFDA;
+  --color-line-strong: #BFC4BC;
 
+  /* Mineral System Accents (<= 10% Budget) */
+  --color-jade: #1F6B57;
+  --color-bronze: #A85524;
+  --color-violet: #5B4382;
+
+  /* Typography (2+1 Anti-Default Rule) */
+  --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Architectural Motion Easing */
+  --ease-architectural: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-tactile: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:root {
+  color-scheme: light;
+  --bg: var(--color-canvas);
+  --surface: var(--color-surface);
+  --mist: var(--color-mist);
+  --ink: var(--color-ink);
+  --muted: var(--color-ink-muted);
+  --line: var(--color-line);
+  --jade: var(--color-jade);
+  --bronze: var(--color-bronze);
+  --violet: var(--color-violet);
+}
+
+@layer base {
   html {
-    scroll-behavior: auto;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+    scroll-padding-top: 84px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
-    font-family: var(--font-sans);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
+    margin: 0;
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
+    overflow-x: clip;
   }
 
-  h1, h2, h3, h4, .font-display, .font-mechanik {
-    font-family: var(--font-mechanik);
-    font-feature-settings: "ss01" 1, "ss02" 1, "tnum" 1;
-    letter-spacing: -0.032em;
-  }
-
-  .font-mono-tabular {
-    font-family: var(--font-mono);
-    font-variant-numeric: tabular-nums;
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 4px;
+    border-radius: 3px;
   }
 }
 
-.gpu-layer {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* Architectural coordinate grids (light-mode graphite hairlines) */
+.atlas-grid {
+  background-image:
+    linear-gradient(to right, rgba(17, 19, 18, 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 19, 18, 0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 32%, transparent 82%);
+  -webkit-mask-image: radial-gradient(ellipse 72% 72% at 50% 50%, #000 32%, transparent 82%);
 }
 
-.contain-paint {
-  /* Layout containment without paint clipping so mobile Chrome never drops image tiles */
-  contain: layout style;
+.plinth-grid {
+  background-image:
+    linear-gradient(to right, rgba(17, 19, 18, 0.048) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 19, 18, 0.048) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.85) 26%, rgba(0, 0, 0, 0.85) 74%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.85) 26%, rgba(0, 0, 0, 0.85) 74%, transparent);
 }
 
-img {
-  image-rendering: -webkit-optimize-contrast;
-  image-rendering: auto;
+.blueprint-grid {
+  background-image:
+    linear-gradient(to right, rgba(17, 19, 18, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 19, 18, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
-.balance-text {
-  text-wrap: balance;
+/* Quiet architectural underline animation on nav links */
+.nav-link-underline {
+  position: relative;
 }
 
-/* Pause looping SVG icon animations while their section is off-screen (toggled by App.tsx) */
-.is-offscreen svg,
-.is-offscreen svg * {
-  animation-play-state: paused !important;
+.nav-link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background-color: var(--color-ink);
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 240ms var(--ease-architectural);
+}
+
+.nav-link-underline:hover::after,
+.nav-link-underline:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Reduced motion discipline */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Clean archival print layout for the Studio Brief modal */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111312 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-brief-surface {
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
 }
